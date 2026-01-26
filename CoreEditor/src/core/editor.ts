@@ -4,30 +4,30 @@
 
 import { EditorState } from "@codemirror/state";
 import { EditorView, lineNumbers } from "@codemirror/view";
-import { createMarkdownExtensions } from "../extensions";
-import { getThemeExtension } from "../ui/themes";
-import { CommandPalette } from "../ui/command-palette";
 import {
-  createMermaidExtension,
-  createMathExtension,
+  notifyContentChanged,
+  notifyFocus,
+  notifySelectionChanged,
+} from "../bridge";
+import { createMarkdownExtensions } from "../extensions";
+import { CommandPalette } from "../ui/command-palette";
+import { getThemeExtension } from "../ui/themes";
+import { debounce } from "../utils/debounce";
+import {
   createImageExtension,
+  createMathExtension,
+  createMermaidExtension,
   createSyntaxHidingExtension,
 } from "../widgets";
 import {
-  notifyContentChanged,
-  notifySelectionChanged,
-  notifyFocus,
-} from "../bridge";
-import { debounce } from "../utils/debounce";
-import {
-  themeCompartment,
-  styleCompartment,
+  imageCompartment,
   lineNumbersCompartment,
   lineWrappingCompartment,
-  mermaidCompartment,
-  syntaxHidingCompartment,
-  imageCompartment,
   mathCompartment,
+  mermaidCompartment,
+  styleCompartment,
+  syntaxHidingCompartment,
+  themeCompartment,
   updateConfig,
 } from "./state";
 
@@ -37,7 +37,7 @@ let commandPalette: CommandPalette | null = null;
 // Debounced content change notification
 const debouncedContentChange = debounce(
   (content: string) => notifyContentChanged(content),
-  100
+  100,
 );
 
 /**
@@ -60,7 +60,7 @@ export function getCommandPalette(): CommandPalette | null {
 export function initEditor(
   container: HTMLElement,
   initialContent: string = "",
-  theme: "light" | "dark" = "light"
+  theme: "light" | "dark" = "light",
 ): EditorView {
   const config = updateConfig({ theme });
 
@@ -77,20 +77,21 @@ export function initEditor(
             fontSize: `${config.fontSize}px`,
             fontFamily: config.fontFamily || "monospace",
           },
+          ".cm-scroller": { fontFamily: config.fontFamily || "monospace" },
           ".cm-line": {
             lineHeight: String(config.lineHeight),
           },
-        })
+        }),
       ),
       lineNumbersCompartment.of(config.showLineNumbers ? lineNumbers() : []),
       lineWrappingCompartment.of(
-        config.wrapLines ? EditorView.lineWrapping : []
+        config.wrapLines ? EditorView.lineWrapping : [],
       ),
       mermaidCompartment.of(
-        config.renderMermaid ? createMermaidExtension() : []
+        config.renderMermaid ? createMermaidExtension() : [],
       ),
       syntaxHidingCompartment.of(
-        config.hideSyntax ? createSyntaxHidingExtension() : []
+        config.hideSyntax ? createSyntaxHidingExtension() : [],
       ),
       imageCompartment.of(config.renderImages ? createImageExtension() : []),
       mathCompartment.of(config.renderMath ? createMathExtension() : []),

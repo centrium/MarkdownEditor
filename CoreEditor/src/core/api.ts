@@ -4,28 +4,28 @@
  * Provides the public API exposed to Swift via window.editorAPI.
  */
 
+import { redo, undo } from "@codemirror/commands";
 import { EditorView, lineNumbers } from "@codemirror/view";
-import { undo, redo } from "@codemirror/commands";
 import type { EditorAPI, EditorConfig } from "../bridge";
+import { CommandPalette } from "../ui/command-palette";
 import { getThemeExtension } from "../ui/themes";
 import {
-  createMermaidExtension,
-  createMathExtension,
   createImageExtension,
+  createMathExtension,
+  createMermaidExtension,
   createSyntaxHidingExtension,
-  setMermaidTheme,
   setMathTheme,
+  setMermaidTheme,
 } from "../widgets";
-import { CommandPalette } from "../ui/command-palette";
 import {
-  themeCompartment,
-  styleCompartment,
+  imageCompartment,
   lineNumbersCompartment,
   lineWrappingCompartment,
-  mermaidCompartment,
-  syntaxHidingCompartment,
-  imageCompartment,
   mathCompartment,
+  mermaidCompartment,
+  styleCompartment,
+  syntaxHidingCompartment,
+  themeCompartment,
   updateConfig,
 } from "./state";
 
@@ -34,7 +34,7 @@ import {
  */
 export function createEditorAPI(
   getView: () => EditorView | null,
-  getPalette: () => CommandPalette | null
+  getPalette: () => CommandPalette | null,
 ): EditorAPI {
   /**
    * Wraps selection with markers.
@@ -232,7 +232,7 @@ export function createEditorAPI(
 
       if (config.theme) {
         effects.push(
-          themeCompartment.reconfigure(getThemeExtension(config.theme))
+          themeCompartment.reconfigure(getThemeExtension(config.theme)),
         );
         getPalette()?.setTheme(config.theme);
         setMermaidTheme(config.theme);
@@ -240,66 +240,70 @@ export function createEditorAPI(
       }
 
       if (config.fontSize || config.fontFamily || config.lineHeight) {
+        const font = currentConfig.fontFamily || "monospace";
         effects.push(
           styleCompartment.reconfigure(
             EditorView.theme({
               "&": {
                 fontSize: `${currentConfig.fontSize}px`,
-                fontFamily: currentConfig.fontFamily || "monospace",
+                fontFamily: font,
+              },
+              ".cm-scroller": {
+                fontFamily: font,
               },
               ".cm-line": {
                 lineHeight: String(currentConfig.lineHeight),
               },
-            })
-          )
+            }),
+          ),
         );
       }
 
       if (config.showLineNumbers !== undefined) {
         effects.push(
           lineNumbersCompartment.reconfigure(
-            config.showLineNumbers ? lineNumbers() : []
-          )
+            config.showLineNumbers ? lineNumbers() : [],
+          ),
         );
       }
 
       if (config.wrapLines !== undefined) {
         effects.push(
           lineWrappingCompartment.reconfigure(
-            config.wrapLines ? EditorView.lineWrapping : []
-          )
+            config.wrapLines ? EditorView.lineWrapping : [],
+          ),
         );
       }
 
       if (config.renderMermaid !== undefined) {
         effects.push(
           mermaidCompartment.reconfigure(
-            config.renderMermaid ? createMermaidExtension() : []
-          )
+            config.renderMermaid ? createMermaidExtension() : [],
+          ),
         );
       }
 
       if (config.hideSyntax !== undefined) {
         effects.push(
           syntaxHidingCompartment.reconfigure(
-            config.hideSyntax ? createSyntaxHidingExtension() : []
-          )
+            config.hideSyntax ? createSyntaxHidingExtension() : [],
+          ),
         );
       }
 
       if (config.renderImages !== undefined) {
         effects.push(
           imageCompartment.reconfigure(
-            config.renderImages ? createImageExtension() : []
-          )
+            config.renderImages ? createImageExtension() : [],
+          ),
         );
       }
 
       if (config.renderMath !== undefined) {
         effects.push(
           mathCompartment.reconfigure(
-            config.renderMath ? createMathExtension() : []
-          )
+            config.renderMath ? createMathExtension() : [],
+          ),
         );
       }
 

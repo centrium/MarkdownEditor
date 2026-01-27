@@ -24,7 +24,7 @@ export const baseTheme = EditorView.baseTheme({
   },
 
   ".cm-content": {
-    maxWidth: "720px",
+    maxWidth: "680px",
     margin: "0 auto",
     padding: "0 8px",
     minHeight: "100%",

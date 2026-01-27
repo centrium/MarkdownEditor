@@ -188,7 +188,12 @@ public final class EditorBridge: NSObject {
         let result = try await webView.evaluateJavaScript("window.editorAPI.getContent()")
         return result as? String ?? ""
     }
-    
+
+    @MainActor
+    public func evaluateJavaScript(_ js: String) async {
+        await webView?.evaluateJavaScript(js)
+    }
+            
     /// Sets the editor content.
     ///
     /// - Parameter content: The Markdown content to set.

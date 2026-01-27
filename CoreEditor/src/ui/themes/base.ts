@@ -18,7 +18,6 @@ export const baseTheme = EditorView.baseTheme({
     overflow: "auto",
     fontFamily:
       'var(--editor-font-family, -apple-system, BlinkMacSystemFont, "SF Mono", Menlo, Monaco, monospace)',
-    // ✅ breathing room around the "page"
     padding: "32px 24px 72px",
     boxSizing: "border-box",
   },
@@ -41,7 +40,7 @@ export const baseTheme = EditorView.baseTheme({
     textAlign: "right",
   },
   ".cm-activeLine": {
-    backgroundColor: "var(--active-line-bg, rgba(0,0,0,0.03))",
+    backgroundColor: "rgba(0,0,0,0.015)",
   },
   ".cm-activeLineGutter": {
     backgroundColor: "transparent",
@@ -76,6 +75,9 @@ export const baseTheme = EditorView.baseTheme({
   },
   ".cm-tooltip-autocomplete ul li[aria-selected]": {
     background: "rgba(0,0,0,0.05)",
+  },
+  ".cm-formatting": {
+    opacity: "0.55",
   },
 });
 

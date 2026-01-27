@@ -16,7 +16,6 @@ export const commands: CommandItem[] = [
   {
     label: "Insert Date",
     detail: "Insert today’s date",
-    shortcut: "⌘D",
     section: "Insert",
     apply: (view) => {
       const formatted = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
@@ -25,6 +24,27 @@ export const commands: CommandItem[] = [
       view.dispatch({
         changes: { from, to, insert: formatted },
         selection: { anchor: from + formatted.length },
+      });
+    },
+  },
+  {
+    label: "Insert Date Header",
+    detail: "Insert today as a heading",
+    section: "Insert",
+    apply: (view) => {
+      const formatted = new Date().toLocaleDateString("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+
+      const text = `## ${formatted}\n\n`;
+      const { from } = view.state.selection.main;
+
+      view.dispatch({
+        changes: { from, to: from, insert: text },
+        selection: { anchor: from + text.length },
       });
     },
   },

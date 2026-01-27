@@ -5,11 +5,11 @@
 import { Extension, Prec } from "@codemirror/state";
 import { keymap } from "@codemirror/view";
 import {
+  cycleTodo,
   toggleBold,
   toggleItalic,
   toggleList,
   toggleOrderedList,
-  cycleTodo,
 } from "./formatting";
 
 /**

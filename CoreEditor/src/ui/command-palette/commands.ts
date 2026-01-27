@@ -13,6 +13,21 @@ export interface CommandItem {
 }
 
 export const commands: CommandItem[] = [
+  {
+    label: "Insert Date",
+    detail: "Insert today’s date",
+    shortcut: "⌘D",
+    section: "Insert",
+    apply: (view) => {
+      const formatted = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+      const { from, to } = view.state.selection.main;
+
+      view.dispatch({
+        changes: { from, to, insert: formatted },
+        selection: { anchor: from + formatted.length },
+      });
+    },
+  },
   // Formatting
   {
     label: "Bold",
@@ -139,7 +154,7 @@ export const commands: CommandItem[] = [
     section: "Diagrams",
     apply: () =>
       window.editorAPI?.insertText(
-        "```mermaid\ngraph LR\n  A[Start] --> B{Decision}\n  B -->|Yes| C[OK]\n  B -->|No| D[Cancel]\n```"
+        "```mermaid\ngraph LR\n  A[Start] --> B{Decision}\n  B -->|Yes| C[OK]\n  B -->|No| D[Cancel]\n```",
       ),
   },
   {
@@ -148,7 +163,7 @@ export const commands: CommandItem[] = [
     section: "Diagrams",
     apply: () =>
       window.editorAPI?.insertText(
-        "```mermaid\nsequenceDiagram\n  Alice->>John: Hello John, how are you?\n  John-->>Alice: Great!\n```"
+        "```mermaid\nsequenceDiagram\n  Alice->>John: Hello John, how are you?\n  John-->>Alice: Great!\n```",
       ),
   },
   {
@@ -157,7 +172,7 @@ export const commands: CommandItem[] = [
     section: "Diagrams",
     apply: () =>
       window.editorAPI?.insertText(
-        "```mermaid\nclassDiagram\n  Animal <|-- Duck\n  Animal : +int age\n  class Duck{\n    +swim()\n  }\n```"
+        "```mermaid\nclassDiagram\n  Animal <|-- Duck\n  Animal : +int age\n  class Duck{\n    +swim()\n  }\n```",
       ),
   },
   {
@@ -166,7 +181,7 @@ export const commands: CommandItem[] = [
     section: "Diagrams",
     apply: () =>
       window.editorAPI?.insertText(
-        "```mermaid\nmindmap\n  root((mindmap))\n    Origins\n    Research\n```"
+        "```mermaid\nmindmap\n  root((mindmap))\n    Origins\n    Research\n```",
       ),
   },
 
@@ -177,7 +192,7 @@ export const commands: CommandItem[] = [
     section: "Math",
     apply: () =>
       window.editorAPI?.insertText(
-        "$$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$"
+        "$$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$",
       ),
   },
   {
@@ -192,7 +207,7 @@ export const commands: CommandItem[] = [
     section: "Math",
     apply: () =>
       window.editorAPI?.insertText(
-        "$$ \\sum_{i=1}^{n} i = \\frac{n(n+1)}{2} $$"
+        "$$ \\sum_{i=1}^{n} i = \\frac{n(n+1)}{2} $$",
       ),
   },
   {

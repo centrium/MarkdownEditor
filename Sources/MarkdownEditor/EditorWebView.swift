@@ -286,7 +286,7 @@ public struct EditorWebView: NSViewRepresentable {
                     })();
                     """
 
-                 await bridge.evaluateJavaScript(js)
+                 await bridge.evaluateJavaScriptSafely(js)
 
                 // Apply theme
                 await bridge.setTheme(currentTheme)

@@ -2,23 +2,11 @@
  * Base CodeMirror extensions bundle.
  */
 
-import { Extension } from "@codemirror/state";
 import {
-  EditorView,
-  keymap,
-  highlightActiveLine,
-  highlightActiveLineGutter,
-  drawSelection,
-  dropCursor,
-  rectangularSelection,
-  crosshairCursor,
-} from "@codemirror/view";
-import {
-  indentOnInput,
-  bracketMatching,
-  foldGutter,
-  foldKeymap,
-} from "@codemirror/language";
+  autocompletion,
+  closeBrackets,
+  closeBracketsKeymap,
+} from "@codemirror/autocomplete";
 import {
   defaultKeymap,
   history,
@@ -26,14 +14,26 @@ import {
   indentWithTab,
 } from "@codemirror/commands";
 import {
-  closeBrackets,
-  closeBracketsKeymap,
-  autocompletion,
-} from "@codemirror/autocomplete";
-import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
+  bracketMatching,
+  foldGutter,
+  foldKeymap,
+  indentOnInput,
+} from "@codemirror/language";
+import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
+import { Extension } from "@codemirror/state";
+import {
+  crosshairCursor,
+  drawSelection,
+  dropCursor,
+  EditorView,
+  highlightActiveLine,
+  highlightActiveLineGutter,
+  keymap,
+  rectangularSelection,
+} from "@codemirror/view";
 
 import { mathCompletion } from "./calc";
-
+import { htmlPasteExtension } from "./pasteHtml";
 /**
  * Creates autocompletion with math expression support.
  */
@@ -64,6 +64,7 @@ export function createBaseExtensions(): Extension[] {
     rectangularSelection(),
     crosshairCursor(),
     highlightSelectionMatches(),
+    htmlPasteExtension(),
     EditorView.lineWrapping,
     keymap.of([
       ...closeBracketsKeymap,

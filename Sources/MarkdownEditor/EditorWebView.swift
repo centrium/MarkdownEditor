@@ -264,6 +264,30 @@ public struct EditorWebView: NSViewRepresentable {
         
         public func editorDidBecomeReady() {
             Task { @MainActor in
+
+                let fontCSS = """
+                    @font-face {
+                    font-family: 'SoftdraftEditorMono';
+                    src: url('fonts/IBMPlexMono-Regular.ttf') format('truetype');
+                    font-weight: 400;
+                    font-style: normal;
+                    font-display: block;
+                    }
+                    """
+
+                    let js = """
+                    (function() {
+                        if (document.getElementById('softdraft-editor-font')) return;
+
+                        const style = document.createElement('style');
+                        style.id = 'softdraft-editor-font';
+                        style.textContent = \(fontCSS.debugDescription);
+                        document.head.appendChild(style);
+                    })();
+                    """
+
+                 await bridge.evaluateJavaScript(js)
+
                 // Apply theme
                 await bridge.setTheme(currentTheme)
                 

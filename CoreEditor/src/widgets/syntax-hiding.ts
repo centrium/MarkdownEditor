@@ -5,15 +5,15 @@
  * Uses mark decorations with CSS hiding to avoid cursor issues.
  */
 
-import { Extension, RangeSetBuilder, StateField } from "@codemirror/state";
-import {
-  EditorView,
-  Decoration,
-  DecorationSet,
-  WidgetType,
-} from "@codemirror/view";
 import { syntaxTree } from "@codemirror/language";
 import type { EditorState } from "@codemirror/state";
+import { Extension, RangeSetBuilder, StateField } from "@codemirror/state";
+import {
+  Decoration,
+  DecorationSet,
+  EditorView,
+  WidgetType,
+} from "@codemirror/view";
 import { createElement } from "../utils/dom";
 
 /** Decoration that visually hides markers via CSS. */
@@ -78,6 +78,31 @@ function isPositionActive(state: EditorState, pos: number): boolean {
   return getActiveLines(state).has(lineNumber);
 }
 
+/** Hides a heading marker and any immediately trailing whitespace. */
+function hideHeadingMark(
+  builder: RangeSetBuilder<Decoration>,
+  state: EditorState,
+  from: number,
+  to: number,
+) {
+  builder.add(from, to, hideDecoration);
+
+  let whitespaceEnd = to;
+  const docLength = state.doc.length;
+  while (whitespaceEnd < docLength) {
+    const char = state.doc.sliceString(whitespaceEnd, whitespaceEnd + 1);
+    if (char === " " || char === "\t") {
+      whitespaceEnd += 1;
+      continue;
+    }
+    break;
+  }
+
+  if (whitespaceEnd > to) {
+    builder.add(to, whitespaceEnd, hideDecoration);
+  }
+}
+
 /**
  * Builds hiding decorations for inactive lines.
  */
@@ -117,6 +142,11 @@ function buildHidingDecorations(state: EditorState): DecorationSet {
         if (parent && (parent.name === "Link" || parent.name === "Image")) {
           builder.add(node.from, node.to, hideDecoration);
         }
+        return;
+      }
+
+      if (node.name === "HeaderMark") {
+        hideHeadingMark(builder, state, node.from, node.to);
         return;
       }
 
@@ -164,12 +194,12 @@ const syntaxHidingStyles = EditorView.baseTheme({
 
 const syntaxVarsLight = EditorView.theme(
   { "&": { "--divider-color": "rgba(0,0,0,0.1)" } },
-  { dark: false }
+  { dark: false },
 );
 
 const syntaxVarsDark = EditorView.theme(
   { "&": { "--divider-color": "rgba(255,255,255,0.15)" } },
-  { dark: true }
+  { dark: true },
 );
 
 /**

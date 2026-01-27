@@ -190,8 +190,16 @@ public final class EditorBridge: NSObject {
     }
 
     @MainActor
-    public func evaluateJavaScript(_ js: String) async {
-        await webView?.evaluateJavaScript(js)
+    public func evaluateJavaScriptSafely(_ js: String) async {
+        do {
+            _ = try await webView?.evaluateJavaScript(js)
+        } catch {
+            // Intentionally ignored
+            // Font injection failure should not break the editor
+            #if DEBUG
+            print("[EditorBridge] JS injection failed:", error)
+            #endif
+        }
     }
             
     /// Sets the editor content.

@@ -268,7 +268,7 @@ public struct EditorWebView: NSViewRepresentable {
                 let fontCSS = """
                     @font-face {
                     font-family: 'SoftdraftEditorMono';
-                    src: url('Fonts/IBMPlexMono-Regular.ttf') format('truetype');
+                    src: url('IBMPlexMono-Regular.ttf') format('truetype');
                     font-weight: 400;
                     font-style: normal;
                     font-display: block;

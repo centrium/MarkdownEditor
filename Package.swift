@@ -16,12 +16,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MarkdownEditor",
-            resources: [
-                .copy("Resources/editor.html"),
-                .process("Resources/PrivacyInfo.xcprivacy")
-            ]
-        ),
+                name: "MarkdownEditor",
+                resources: [
+                    .process("Resources")
+                ]
+            ),
         .testTarget(
             name: "MarkdownEditorTests",
             dependencies: ["MarkdownEditor"]

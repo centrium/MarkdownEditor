@@ -2,8 +2,8 @@
  * Base theme styles shared between light and dark themes.
  */
 
-import { EditorView } from "@codemirror/view";
 import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
+import { EditorView } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
 
 /**
@@ -18,10 +18,17 @@ export const baseTheme = EditorView.baseTheme({
     overflow: "auto",
     fontFamily:
       'var(--editor-font-family, -apple-system, BlinkMacSystemFont, "SF Mono", Menlo, Monaco, monospace)',
+    // ✅ breathing room around the "page"
+    padding: "32px 24px 72px",
+    boxSizing: "border-box",
   },
+
   ".cm-content": {
-    padding: "16px",
+    maxWidth: "720px",
+    margin: "0 auto",
+    padding: "0 8px",
     minHeight: "100%",
+    boxSizing: "border-box",
   },
   ".cm-gutters": {
     backgroundColor: "transparent",
@@ -79,25 +86,25 @@ export const markdownHighlightStyle = HighlightStyle.define([
   // Headings - dynamic sizes
   {
     tag: tags.heading1,
-    fontSize: "1.8em",
-    fontWeight: "700",
-    lineHeight: "1.3",
+    fontSize: "1.6em",
+    fontWeight: "650",
+    lineHeight: "1.25",
   },
   {
     tag: tags.heading2,
-    fontSize: "1.5em",
+    fontSize: "1.35em",
     fontWeight: "600",
-    lineHeight: "1.35",
+    lineHeight: "1.3",
   },
   {
     tag: tags.heading3,
-    fontSize: "1.3em",
+    fontSize: "1.2em",
     fontWeight: "600",
-    lineHeight: "1.4",
+    lineHeight: "1.35",
   },
-  { tag: tags.heading4, fontSize: "1.15em", fontWeight: "600" },
-  { tag: tags.heading5, fontSize: "1.1em", fontWeight: "600" },
-  { tag: tags.heading6, fontSize: "1.05em", fontWeight: "600" },
+  { tag: tags.heading4, fontSize: "1.1em", fontWeight: "600" },
+  { tag: tags.heading5, fontSize: "1.05em", fontWeight: "600" },
+  { tag: tags.heading6, fontSize: "1.0em", fontWeight: "600" },
 
   // Emphasis
   { tag: tags.emphasis, fontStyle: "italic" },

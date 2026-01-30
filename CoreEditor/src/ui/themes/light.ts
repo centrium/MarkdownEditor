@@ -21,7 +21,7 @@ export const lightThemeVars = EditorView.theme(
       color: "#8e8e93",
     },
     ".cm-tooltip": {
-      background: "rgba(255, 255, 255, 0.92) !important",
+      background: "rgba(151, 53, 53, 0.92) !important",
       backdropFilter: "blur(50px) saturate(190%)",
       border: "0.5px solid rgba(0, 0, 0, 0.1) !important",
       borderRadius: "10px",
@@ -48,7 +48,7 @@ export const lightThemeVars = EditorView.theme(
       color: "#636366",
     },
   },
-  { dark: false }
+  { dark: false },
 );
 
 /**

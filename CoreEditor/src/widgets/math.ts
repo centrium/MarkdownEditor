@@ -24,11 +24,17 @@ import { getCachedWidget } from "./base";
 let katexPromise: Promise<typeof import("katex")> | null = null;
 let katexInstance: typeof import("katex").default | null = null;
 let currentTheme: "light" | "dark" = "light";
+let katexCssLoaded = false;
 
 /**
  * Lazily loads KaTeX and its CSS.
  */
 async function getKatex() {
+  if (!katexCssLoaded) {
+    katexCssLoaded = true;
+    await import("katex/dist/katex.min.css");
+  }
+
   if (katexInstance) return katexInstance;
 
   if (!katexPromise) {

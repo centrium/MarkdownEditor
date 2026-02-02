@@ -219,7 +219,8 @@ function buildMathDecorations(state: EditorState): DecorationSet {
   }));
 
   // Match block ($$...$$) and inline ($...$)
-  const regex = /(\$\$[\s\S]*?\$\$)|(\$[^$\n]*?\$)/g;
+  // Inline pattern uses (?!\$) to ensure opening $ is not followed by another $
+  const regex = /(\$\$[\s\S]*?\$\$)|(\$(?!\$)[^$\n]*?\$)/g;
 
   const matches: {
     from: number;

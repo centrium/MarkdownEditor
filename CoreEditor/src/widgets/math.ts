@@ -274,6 +274,12 @@ function buildMathDecorations(state: EditorState): DecorationSet {
         block: true,
       });
       builder.add(current.from, endTo, widget);
+    } else {
+      const widget = Decoration.replace({
+        widget: createMathWidget([current.code], false),
+        block: false,
+      });
+      builder.add(current.from, current.to, widget);
     }
   }
 

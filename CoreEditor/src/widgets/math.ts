@@ -285,12 +285,13 @@ const mathStyles = EditorView.baseTheme({
     cursor: "pointer",
     verticalAlign: "middle",
     borderRadius: "4px",
+    border: "1px solid rgba(0,0,0,0.12)",
+    padding: "2px 4px",
+    backgroundColor: "rgba(0,0,0,0.015)",
+    display: "inline-block",
+    boxSizing: "border-box",
   },
-  ".cm-math-widget:hover": {
-    outline: "1px dashed rgba(0,0,0,0.15)",
-    outlineOffset: "2px",
-    cursor: "pointer",
-  },
+
   ".cm-math-resize-container": {
     position: "relative",
     display: "inline-block",

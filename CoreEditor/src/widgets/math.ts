@@ -213,23 +213,21 @@ const mathField = StateField.define<DecorationSet>({
 function buildMathDecorations(state: EditorState): DecorationSet {
   const builder = new RangeSetBuilder<Decoration>();
   const text = state.doc.toString();
+
   const selectionRanges = state.selection.ranges.map((r) => ({
     from: r.from,
     to: r.to,
   }));
 
-  // Match block ($$...$$) and inline ($...$)
-  // Inline pattern uses (?!\$) to ensure opening $ is not followed by another $
+  // Matches:
+  // - block $$...$$ (can span lines)
+  // - inline $...$ (single line)
   const regex = /(\$\$[\s\S]*?\$\$)|(\$(?!\$)[^$\n]*?\$)/g;
 
-  const matches: {
-    from: number;
-    to: number;
-    code: string;
-    isBlock: boolean;
-  }[] = [];
+  type Match = { from: number; to: number; code: string; isBlock: boolean };
+  const matches: Match[] = [];
 
-  let match;
+  let match: RegExpExecArray | null;
   while ((match = regex.exec(text))) {
     const fullMatch = match[0];
     const isBlock = fullMatch.startsWith("$$");
@@ -242,44 +240,97 @@ function buildMathDecorations(state: EditorState): DecorationSet {
     });
   }
 
+  const overlapsSelection = (from: number, to: number) =>
+    isRangeSelected(selectionRanges, from, to);
+
+  const isBlockIsolatedOnLines = (from: number, to: number) => {
+    // Block replacements must align to full lines in CM6.
+    // We also enforce "math block is the only non-whitespace content on its line(s)".
+    const startLine = state.doc.lineAt(from);
+    const endLine = state.doc.lineAt(to);
+
+    // Must start after only whitespace on the start line
+    const prefix = state.doc.sliceString(startLine.from, from);
+    if (!/^\s*$/.test(prefix)) return false;
+
+    // Must end before only whitespace on the end line
+    const suffix = state.doc.sliceString(to, endLine.to);
+    if (!/^\s*$/.test(suffix)) return false;
+
+    return true;
+  };
+
+  const lineAlignedRangeForBlock = (from: number, to: number) => {
+    const startLine = state.doc.lineAt(from);
+    const endLine = state.doc.lineAt(to);
+    return { from: startLine.from, to: endLine.to };
+  };
+
   // Group adjacent block formulas
   for (let i = 0; i < matches.length; i++) {
     const current = matches[i];
+
+    // Inline math: keep your old behaviour (safe)
+    if (!current.isBlock) {
+      if (overlapsSelection(current.from, current.to)) continue;
+
+      const widget = Decoration.replace({
+        widget: createMathWidget([current.code], false),
+        block: false,
+      });
+
+      builder.add(current.from, current.to, widget);
+      continue;
+    }
+
+    // Block math: only render if isolated (whitespace-only around it on its line(s))
+    // This prevents the crash for lines like: "text $$ ... $$ text"
+    // and also for "  $$ ... $$" with other content on the same line.
+    if (!isBlockIsolatedOnLines(current.from, current.to)) {
+      continue;
+    }
+
+    // Group adjacent isolated block formulas separated by whitespace only
     const codes = [current.code];
     let endTo = current.to;
     let nextIndex = i + 1;
 
-    if (current.isBlock) {
-      while (nextIndex < matches.length) {
-        const next = matches[nextIndex];
-        if (!next.isBlock) break;
+    while (nextIndex < matches.length) {
+      const next = matches[nextIndex];
+      if (!next.isBlock) break;
 
-        const textBetween = text.slice(endTo, next.from);
-        if (!/^\s*$/.test(textBetween)) break;
+      // Only group if there is only whitespace between blocks
+      const between = text.slice(endTo, next.from);
+      if (!/^\s*$/.test(between)) break;
 
-        codes.push(next.code);
-        endTo = next.to;
-        nextIndex++;
-      }
+      // Only group if next block is also isolated on its line(s)
+      if (!isBlockIsolatedOnLines(next.from, next.to)) break;
+
+      codes.push(next.code);
+      endTo = next.to;
+      nextIndex++;
     }
 
     i = nextIndex - 1;
 
-    if (isRangeSelected(selectionRanges, current.from, endTo)) {
+    // IMPORTANT: selection check should cover the final, grouped range
+    if (overlapsSelection(current.from, endTo)) {
       continue;
     }
 
+    // CRITICAL: line-align the replacement range for block widgets
+    const aligned = lineAlignedRangeForBlock(current.from, endTo);
+
     const widget = Decoration.replace({
-      widget: createMathWidget(codes, current.isBlock),
-      block: current.isBlock,
+      widget: createMathWidget(codes, true),
+      block: true,
     });
 
-    builder.add(current.from, endTo, widget);
+    builder.add(aligned.from, aligned.to, widget);
   }
 
   return builder.finish();
 }
-
 const mathStyles = EditorView.baseTheme({
   ".cm-math-widget": {
     cursor: "pointer",

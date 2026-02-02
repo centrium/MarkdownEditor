@@ -122,6 +122,13 @@ export const markdownHighlightStyle = HighlightStyle.define([
 
   // Quote
   { tag: tags.quote, fontStyle: "italic", opacity: "0.85" },
+
+  {
+    tag: tags.special(tags.content),
+    backgroundColor: "rgba(255, 230, 140, 0.35)",
+    borderRadius: "3px",
+    padding: "0 2px",
+  },
 ]);
 
 /**

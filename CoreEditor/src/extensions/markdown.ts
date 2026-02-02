@@ -2,10 +2,11 @@
  * Markdown language support for CodeMirror 6.
  */
 
-import { Extension } from "@codemirror/state";
 import { markdown } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
+import { Extension } from "@codemirror/state";
 import { GFM } from "@lezer/markdown";
+import { highlightExtension } from "./highlight";
 
 /**
  * Creates the Markdown language extension with GFM support.
@@ -13,6 +14,6 @@ import { GFM } from "@lezer/markdown";
 export function createMarkdownLanguage(): Extension {
   return markdown({
     codeLanguages: languages,
-    extensions: [GFM],
+    extensions: [GFM, highlightExtension],
   });
 }

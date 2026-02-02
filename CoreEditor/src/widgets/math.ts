@@ -219,7 +219,7 @@ function buildMathDecorations(state: EditorState): DecorationSet {
   }));
 
   // Match block ($$...$$) and inline ($...$)
-  const regex = /(\$\$[\s\S]*?\$\$)|(\$[^$\n]+?\$)/g;
+  const regex = /(\$\$[\s\S]*?\$\$)|(\$[^$\n]*?\$)/g;
 
   const matches: {
     from: number;

@@ -79,15 +79,6 @@ export const baseTheme = EditorView.baseTheme({
   ".cm-formatting": {
     opacity: "0.55",
   },
-  ".cm-math-widget": {
-    borderRadius: "4px",
-  },
-
-  ".cm-math-widget:hover": {
-    outline: "1px dashed rgba(0,0,0,0.15)",
-    outlineOffset: "2px",
-    cursor: "pointer",
-  },
 });
 
 /**

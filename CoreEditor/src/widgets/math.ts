@@ -9,14 +9,14 @@
  * - Shows source when cursor is within formula
  */
 
+import type { EditorState } from "@codemirror/state";
 import { Extension, RangeSetBuilder, StateField } from "@codemirror/state";
 import {
-  EditorView,
   Decoration,
   DecorationSet,
+  EditorView,
   WidgetType,
 } from "@codemirror/view";
-import type { EditorState } from "@codemirror/state";
 import { createElement } from "../utils/dom";
 import { getCachedWidget } from "./base";
 
@@ -56,7 +56,7 @@ class MathWidget extends WidgetType {
   constructor(
     readonly codes: string[],
     readonly displayMode: boolean,
-    theme: "light" | "dark"
+    theme: "light" | "dark",
   ) {
     super();
     this.theme = theme;
@@ -79,7 +79,7 @@ class MathWidget extends WidgetType {
       }
       // Apply theme class based on widget's stored theme
       span.classList.add(
-        this.theme === "dark" ? "cm-math-dark" : "cm-math-light"
+        this.theme === "dark" ? "cm-math-dark" : "cm-math-light",
       );
 
       // Async render with KaTeX
@@ -177,7 +177,7 @@ function createMathWidget(codes: string[], displayMode: boolean): MathWidget {
   const cacheKey = `math:${currentTheme}:${displayMode}:${codes.join("|||")}`;
   return getCachedWidget(
     cacheKey,
-    () => new MathWidget(codes, displayMode, currentTheme)
+    () => new MathWidget(codes, displayMode, currentTheme),
   );
 }
 
@@ -187,7 +187,7 @@ function createMathWidget(codes: string[], displayMode: boolean): MathWidget {
 function isRangeSelected(
   selection: { from: number; to: number }[],
   from: number,
-  to: number
+  to: number,
 ): boolean {
   for (const range of selection) {
     if (range.from <= to && range.to >= from) {

@@ -268,12 +268,13 @@ function buildMathDecorations(state: EditorState): DecorationSet {
       continue;
     }
 
-    const widget = Decoration.replace({
-      widget: createMathWidget(codes, current.isBlock),
-      block: false,
-    });
-
-    builder.add(current.from, endTo, widget);
+    if (current.isBlock) {
+      const widget = Decoration.replace({
+        widget: createMathWidget(codes, true),
+        block: true,
+      });
+      builder.add(current.from, endTo, widget);
+    }
   }
 
   return builder.finish();

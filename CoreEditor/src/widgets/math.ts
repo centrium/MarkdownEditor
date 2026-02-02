@@ -284,6 +284,12 @@ const mathStyles = EditorView.baseTheme({
   ".cm-math-widget": {
     cursor: "pointer",
     verticalAlign: "middle",
+    borderRadius: "4px",
+  },
+  ".cm-math-widget:hover": {
+    outline: "1px dashed rgba(0,0,0,0.15)",
+    outlineOffset: "2px",
+    cursor: "pointer",
   },
   ".cm-math-resize-container": {
     position: "relative",

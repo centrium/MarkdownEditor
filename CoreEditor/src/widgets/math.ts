@@ -271,7 +271,7 @@ function buildMathDecorations(state: EditorState): DecorationSet {
 
     const widget = Decoration.replace({
       widget: createMathWidget(codes, current.isBlock),
-      block: false,
+      block: current.isBlock,
     });
 
     builder.add(current.from, endTo, widget);

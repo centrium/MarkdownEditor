@@ -16,6 +16,7 @@ export const darkThemeVars = EditorView.theme(
       "--badge-bg": "#3a3a3c",
       "--badge-color": "#fff",
       "--badge-border": "#48484a",
+      "--divider-color": "rgba(255, 255, 255, 0.08)",
     },
     ".cm-gutters": {
       color: "#636366",
@@ -48,7 +49,7 @@ export const darkThemeVars = EditorView.theme(
       color: "#98989d",
     },
   },
-  { dark: true }
+  { dark: true },
 );
 
 /**

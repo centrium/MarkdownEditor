@@ -17,13 +17,13 @@ export const darkThemeVars = EditorView.theme(
       "--badge-color": "#fff",
       "--badge-border": "#48484a",
       "--divider-color": "rgba(255, 255, 255, 0.08)",
-      backgroundColor: "transparent",
+      backgroundColor: "#1C1C1E",
     },
     ".cm-scroller": {
-      backgroundColor: "transparent",
+      backgroundColor: "#1C1C1E",
     },
     ".cm-gutters": {
-      backgroundColor: "transparent",
+      backgroundColor: "#1C1C1E",
       color: "#636366",
     },
     ".cm-tooltip": {

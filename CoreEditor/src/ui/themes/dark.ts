@@ -11,13 +11,18 @@ import { xcodeDark } from "@uiw/codemirror-theme-xcode";
 export const darkThemeVars = EditorView.theme(
   {
     "&": {
-      "--active-line-bg": "rgba(255, 255, 255, 0.03)",
+      "--active-line-bg": "rgba(255, 255, 255, 0.02)",
       "--code-block-bg": "rgba(255, 255, 255, 0.05)",
       "--badge-bg": "#3a3a3c",
       "--badge-color": "#fff",
       "--badge-border": "#48484a",
       "--divider-color": "rgba(255, 255, 255, 0.08)",
       backgroundColor: "#1C1C1E",
+    },
+    ".cm-activeLine": {
+      background:
+        "linear-gradient(to right, rgba(255,255,255,0.03), rgba(255,255,255,0.0))",
+      borderRadius: "6px",
     },
     ".cm-scroller": {
       backgroundColor: "#1C1C1E",

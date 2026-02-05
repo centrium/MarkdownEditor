@@ -11,7 +11,7 @@ import { xcodeLight } from "@uiw/codemirror-theme-xcode";
 export const lightThemeVars = EditorView.theme(
   {
     "&": {
-      "--active-line-bg": "rgba(0, 0, 0, 0.03)",
+      "--active-line-bg": "rgba(0, 0, 0, 0.02)",
       "--code-block-bg": "rgba(0, 0, 0, 0.03)",
       "--badge-bg": "#e8e8e8",
       "--badge-color": "#333",
@@ -19,6 +19,11 @@ export const lightThemeVars = EditorView.theme(
     },
     ".cm-gutters": {
       color: "#8e8e93",
+    },
+    ".cm-activeLine": {
+      background:
+        "linear-gradient(to right, rgba(0, 0, 0, 0.035), rgba(0, 0, 0, 0.0))",
+      borderRadius: "6px",
     },
     ".cm-tooltip": {
       background: "rgba(151, 53, 53, 0.92) !important",

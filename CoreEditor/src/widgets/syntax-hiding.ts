@@ -42,7 +42,6 @@ const HIDEABLE_NODES = new Set([
   "EmphasisMark",
   "StrikethroughMark",
   "HighlightMark",
-  "QuoteMark",
   "LinkMark",
   "ImageMark",
 ]);

@@ -296,10 +296,10 @@ const mathStyles = EditorView.baseTheme({
   ".cm-math-widget": {
     cursor: "pointer",
     verticalAlign: "middle",
-    borderRadius: "4px",
-    border: "1px solid rgba(0,0,0,0.12)",
-    padding: "2px 4px",
-    backgroundColor: "rgba(0,0,0,0.015)",
+    borderRadius: "3px",
+    padding: "0 2px",
+    backgroundColor: "rgba(0,0,0,0.02)", // optional, very subtle
+    border: "none", // ⬅ remove border
     display: "inline-block",
     boxSizing: "border-box",
   },
@@ -309,18 +309,18 @@ const mathStyles = EditorView.baseTheme({
     display: "inline-block",
     width: "fit-content",
     minWidth: "150px",
-    margin: "1em 1em 1em 0",
+    margin: "1em 0", // ⬅ vertical rhythm only
     verticalAlign: "top",
     padding: "0",
-    borderRadius: "12px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-    background: "var(--code-block-bg)",
+    borderRadius: "6px", // ⬅ smaller radius
+    boxShadow: "none", // ⬅ remove card feel
+    background: "var(--code-block-bg, rgba(0,0,0,0.03))",
     boxSizing: "border-box",
   },
   ".cm-math-display": {
     display: "block",
     textAlign: "left",
-    padding: "16px 24px",
+    padding: "12px 16px", // ⬅ closer to code blocks
     width: "100%",
     background: "transparent",
     margin: "0",
@@ -328,24 +328,12 @@ const mathStyles = EditorView.baseTheme({
     borderRadius: "0",
   },
   ".cm-math-resize-handle": {
-    position: "absolute",
-    bottom: "4px",
-    right: "4px",
-    width: "16px",
-    height: "16px",
-    cursor: "ew-resize",
-    color: "var(--mermaid-handle-color, #888)",
     opacity: "0",
     transition: "opacity 0.2s",
-    borderRadius: "4px",
-    fontSize: "12px",
-    lineHeight: "16px",
-    textAlign: "center",
-    userSelect: "none",
-    background: "rgba(0,0,0,0.05)",
+    background: "rgba(0,0,0,0.04)",
   },
   ".cm-math-resize-container:hover .cm-math-resize-handle": {
-    opacity: "1",
+    opacity: "0.6",
     background: "rgba(0,0,0,0.1)",
   },
   ".cm-math-error": {

@@ -30,7 +30,7 @@ export const defaultConfig: EditorConfig = {
   wrapLines: true,
   renderMermaid: true,
   hideSyntax: true,
-  renderImages: true,
+  renderImages: false,
   renderMath: true,
 };
 

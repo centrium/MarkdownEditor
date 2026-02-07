@@ -15,7 +15,6 @@ import {
 } from "@codemirror/commands";
 import {
   bracketMatching,
-  foldGutter,
   foldKeymap,
   indentOnInput,
 } from "@codemirror/language";
@@ -55,7 +54,6 @@ export function createBaseExtensions(): Extension[] {
     highlightActiveLineGutter(),
     highlightActiveLine(),
     history(),
-    foldGutter(),
     drawSelection(),
     dropCursor(),
     indentOnInput(),

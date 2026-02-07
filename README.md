@@ -124,7 +124,7 @@ let config = EditorConfiguration(
     wrapLines: true,
     renderMermaid: true,
     renderMath: true,
-    renderImages: true,
+    renderImages: false,
     hideSyntax: true
 )
 
@@ -152,7 +152,7 @@ The `EditorConfiguration` struct provides type-safe configuration for all editor
 | `wrapLines`       | `Bool`    | `true`           | Wrap long lines instead of horizontal scroll |
 | `renderMermaid`   | `Bool`    | `true`           | Enable live Mermaid diagram rendering        |
 | `renderMath`      | `Bool`    | `true`           | Enable KaTeX math formula rendering          |
-| `renderImages`    | `Bool`    | `true`           | Enable inline image rendering                |
+| `renderImages`    | `Bool`    | `false`          | Enable inline image rendering                |
 | `hideSyntax`      | `Bool`    | `true`           | Hide Markdown syntax on inactive lines       |
 
 ### Using Default Configuration

@@ -57,7 +57,7 @@ public struct EditorConfiguration: Codable, Equatable, Sendable {
     ///   - wrapLines: Whether to wrap long lines. Default is true.
     ///   - renderMermaid: Whether to render Mermaid diagrams. Default is true.
     ///   - renderMath: Whether to render KaTeX math formulas. Default is true.
-    ///   - renderImages: Whether to render inline images. Default is true.
+    ///   - renderImages: Whether to render inline images. Default is false.
     ///   - hideSyntax: Whether to hide syntax markers on inactive lines. Default is true.
     public init(
         fontSize: CGFloat = 15,
@@ -67,7 +67,7 @@ public struct EditorConfiguration: Codable, Equatable, Sendable {
         wrapLines: Bool = true,
         renderMermaid: Bool = true,
         renderMath: Bool = true,
-        renderImages: Bool = true,
+        renderImages: Bool = false,
         hideSyntax: Bool = true
     ) {
         self.fontSize = fontSize

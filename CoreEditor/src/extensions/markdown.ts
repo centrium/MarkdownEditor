@@ -6,6 +6,7 @@ import { markdown } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
 import { Extension } from "@codemirror/state";
 import { GFM } from "@lezer/markdown";
+import { hashtagExtension } from "./hashtag";
 import { highlightExtension } from "./highlight";
 
 /**
@@ -14,6 +15,6 @@ import { highlightExtension } from "./highlight";
 export function createMarkdownLanguage(): Extension {
   return markdown({
     codeLanguages: languages,
-    extensions: [GFM, highlightExtension],
+    extensions: [GFM, highlightExtension, hashtagExtension],
   });
 }

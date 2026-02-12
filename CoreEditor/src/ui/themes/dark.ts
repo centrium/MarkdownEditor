@@ -17,6 +17,9 @@ export const darkThemeVars = EditorView.theme(
       "--badge-color": "#fff",
       "--badge-border": "#48484a",
       "--divider-color": "rgba(255, 255, 255, 0.08)",
+      "--tag-bg": "rgba(96, 165, 250, 0.15)",
+      "--tag-color": "#60a5fa",
+      "--tag-border": "rgba(96, 165, 250, 0.25)",
       backgroundColor: "#1C1C1E",
     },
     ".cm-activeLine": {

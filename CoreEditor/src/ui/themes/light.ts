@@ -16,6 +16,9 @@ export const lightThemeVars = EditorView.theme(
       "--badge-bg": "#e8e8e8",
       "--badge-color": "#333",
       "--badge-border": "#ddd",
+      "--tag-bg": "rgba(59, 130, 246, 0.08)",
+      "--tag-color": "#2563eb",
+      "--tag-border": "rgba(59, 130, 246, 0.2)",
     },
     ".cm-gutters": {
       color: "#8e8e93",

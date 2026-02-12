@@ -108,6 +108,20 @@ export const baseTheme = EditorView.baseTheme({
   ".cm-formatting": {
     opacity: "0.55",
   },
+
+  // Hashtag pill styling
+  ".cm-hashtag": {
+    fontFamily: '"SF Mono", Menlo, Monaco, monospace',
+    backgroundColor: "var(--tag-bg, rgba(59, 130, 246, 0.1))",
+    color: "var(--tag-color, #3b82f6)",
+    borderRadius: "12px",
+    padding: "2px 8px",
+    fontSize: "0.9em",
+    fontWeight: "500",
+    border: "1px solid var(--tag-border, rgba(59, 130, 246, 0.2))",
+    display: "inline-block",
+    lineHeight: "1.4",
+  },
 });
 
 /**
@@ -166,6 +180,12 @@ export const markdownHighlightStyle = HighlightStyle.define([
     backgroundColor: "rgba(255, 230, 140, 0.35)",
     borderRadius: "3px",
     padding: "0 2px",
+  },
+
+  // Hashtags
+  {
+    tag: tags.meta,
+    fontFamily: '"SF Mono", Menlo, Monaco, monospace',
   },
 ]);
 

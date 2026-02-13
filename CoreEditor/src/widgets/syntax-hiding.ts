@@ -44,7 +44,6 @@ const HIDEABLE_NODES = new Set([
   "HighlightMark",
   "LinkMark",
   "ImageMark",
-  "HashtagMark",
 ]);
 
 /** Cache for active line checks. */
